@@ -1,16 +1,20 @@
+local_backend: true
+
 backend:
   name: github
-  repo: ТВОЙ_ЛОГИН/НАЗВАНИЕ_РЕПОЗИТОРИЯ # Замени на свой, например: vladen/migration-site
-  branch: main
+  repo: Myak0-0/migration_website
+  branch: master
+  base_url: https://api.netlify.com
+  auth_token: 0d51e56ce3214a6e3a8c04cc04bca20915feb69a
 
-media_folder: "src/assets"
-public_folder: "/src/assets"
+media_folder: "public/assets"
+public_folder: "/assets"
 
 collections:
   - name: "pages"
     label: "Страницы"
     files:
-      - file: "src/data/home.json"
+      - file: "public/data/home.json"
         label: "Главная страница"
         name: "home"
         fields:
@@ -18,30 +22,28 @@ collections:
           - label: "Контент страницы"
             name: "blocks"
             widget: "list"
+            # Переключатель типов блоков
             types:
               - label: "Hero Блок"
                 name: "hero"
-                widget: "object"
                 fields:
                   - {label: "Заголовок", name: "title", widget: "string"}
                   - {label: "Подзаголовок", name: "subtitle", widget: "string"}
                   - {label: "Главный текст", name: "mainText", widget: "text"}
                   - {label: "Текст ссылки", name: "subText", widget: "text"}
               
-              - label: "Преимущества (Иконки)"
+              - label: "Преимущества"
                 name: "features"
-                widget: "object"
                 fields:
-                  - label: "Список"
+                  - label: "Список иконок"
                     name: "items"
                     widget: "list"
                     fields:
                       - {label: "Текст", name: "text", widget: "string"}
-                      - {label: "SVG код", name: "svg", widget: "code", default_language: "html"}
+                      - {label: "SVG код", name: "svg", widget: "text"}
 
               - label: "Инфо-карточки"
                 name: "info_cards"
-                widget: "object"
                 fields:
                   - label: "Карточки"
                     name: "cards"
@@ -52,8 +54,11 @@ collections:
 
               - label: "Сетка сервисов"
                 name: "services_grid"
-                widget: "object"
                 fields:
                   - {label: "Заголовок", name: "title", widget: "string"}
                   - {label: "Описание", name: "subtitle", widget: "string"}
-                  - label: "Список ссылок", name: "items", widget: "list", summary: "{{fields.text}}", field: {label: "Текст", name: "text", widget: "string"}
+                  - label: "Список сервисов"
+                    name: "items"
+                    widget: "list"
+                    fields:
+                      - {label: "Текст", name: "text", widget: "string"}

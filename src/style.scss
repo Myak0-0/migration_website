@@ -2,6 +2,12 @@ $red: #CC0A0A;
 $blue-dark: #2154B2;
 $blue-light: rgba(26, 65, 136, 0.4);
 
+@use 'scss/header.scss';
+
+@use 'scss/main.scss';
+
+@use 'scss/footer.scss';
+
 * {
   margin: 0;
   padding: 0;
@@ -36,13 +42,6 @@ body {
     padding: 7px;
   }
 } 
-
-@import 'scss/header.scss';
-
-@import 'scss/main.scss';
-
-@import 'scss/footer.scss';
-
 
 @media (max-width: 1200px) {
   html {
