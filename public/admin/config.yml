@@ -1,0 +1,59 @@
+backend:
+  name: github
+  repo: ТВОЙ_ЛОГИН/НАЗВАНИЕ_РЕПОЗИТОРИЯ # Замени на свой, например: vladen/migration-site
+  branch: main
+
+media_folder: "src/assets"
+public_folder: "/src/assets"
+
+collections:
+  - name: "pages"
+    label: "Страницы"
+    files:
+      - file: "src/data/home.json"
+        label: "Главная страница"
+        name: "home"
+        fields:
+          - {label: "SEO Description", name: "description", widget: "string"}
+          - label: "Контент страницы"
+            name: "blocks"
+            widget: "list"
+            types:
+              - label: "Hero Блок"
+                name: "hero"
+                widget: "object"
+                fields:
+                  - {label: "Заголовок", name: "title", widget: "string"}
+                  - {label: "Подзаголовок", name: "subtitle", widget: "string"}
+                  - {label: "Главный текст", name: "mainText", widget: "text"}
+                  - {label: "Текст ссылки", name: "subText", widget: "text"}
+              
+              - label: "Преимущества (Иконки)"
+                name: "features"
+                widget: "object"
+                fields:
+                  - label: "Список"
+                    name: "items"
+                    widget: "list"
+                    fields:
+                      - {label: "Текст", name: "text", widget: "string"}
+                      - {label: "SVG код", name: "svg", widget: "code", default_language: "html"}
+
+              - label: "Инфо-карточки"
+                name: "info_cards"
+                widget: "object"
+                fields:
+                  - label: "Карточки"
+                    name: "cards"
+                    widget: "list"
+                    fields:
+                      - {label: "Заголовок", name: "title", widget: "string"}
+                      - {label: "Описание", name: "text", widget: "text"}
+
+              - label: "Сетка сервисов"
+                name: "services_grid"
+                widget: "object"
+                fields:
+                  - {label: "Заголовок", name: "title", widget: "string"}
+                  - {label: "Описание", name: "subtitle", widget: "string"}
+                  - label: "Список ссылок", name: "items", widget: "list", summary: "{{fields.text}}", field: {label: "Текст", name: "text", widget: "string"}
