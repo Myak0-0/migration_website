@@ -46,7 +46,7 @@ const renderHero = (b) => `
   <section class="photo_block">
     <div class="main-wrapper">
       <div class="image">
-        <img src="/src/assets/main_picture.png" alt="heroes" class="img">
+        <img src="/assets/main_picture-BeYouPDK.png" alt="heroes" class="img">
         <div class="blue-filter"></div>
 
         <div class="mobile-btn-wrap">

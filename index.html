@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="">
-    <title>МиграПро — Миграционные услуги</title>
+    <title>МиграПро — Миграционные услуги</title>    
   </head>
   <body>
 
@@ -500,6 +500,17 @@
 
     </footer>
 
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
     <script type="module" src="src/main.js"></script>
   </body>
 </html>
