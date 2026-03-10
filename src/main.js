@@ -1,5 +1,5 @@
 import './style.scss';
-import data from './data/home.json';
+import data from '../public/data/home.json';
 
 const burger = document.getElementById('burger');
 const closeBtn = document.getElementById('closeMenu');
