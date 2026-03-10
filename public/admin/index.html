@@ -1,107 +1,286 @@
-<!-- public/admin/index.html -->
-<!-- <!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Manager</title>      
-</head>
-<body>
-  <div id="nc-root"></div>
-  <script>
-    window.CMS_CONFIG = {};
-  </script>  
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Админка</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; background: #f4f7f9; }
-    textarea { width: 100%; height: 500px; font-family: monospace; padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
-    button { background: #1a4188; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-    button:disabled { background: #ccc; }
-    #status { margin-top: 10px; font-weight: bold; }
-  </style>
+<title>Админка</title>
+
+<style>
+
+body{
+font-family:sans-serif;
+padding:20px;
+background:#f4f7f9;
+}
+
+.section{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.05);
+}
+
+h3{
+margin-top:0;
+}
+
+input, textarea{
+width:100%;
+padding:10px;
+margin-top:5px;
+margin-bottom:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+textarea{
+height:80px;
+}
+
+button{
+background:#1a4188;
+color:white;
+padding:15px 30px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:disabled{
+background:#ccc;
+}
+
+#status{
+margin-top:10px;
+font-weight:bold;
+}
+
+</style>
+
 </head>
 <body>
-  <h2>Редактор контента (JSON)</h2>
-  <p>Отредактируйте данные и нажмите сохранить. Сайт пересоберется автоматически.</p>
-  <textarea id="json-editor"></textarea>
-  <button id="save-btn">Опубликовать изменения на сайте</button>
-  <div id="status"></div>
 
-  <script>
-    const GITHUB_TOKEN = 'ghp_bKuRN6wxJLOp' + 'lGFkbT2NwC4uinIlxz2OeCax'; 
-    const REPO = 'Myak0-0/migration_website';
-    const FILE_PATH = 'public/data/home.json';
-    const BRANCH = 'master';
+<h2>Редактор контента</h2>
 
-    const editor = document.getElementById('json-editor');
-    const btn = document.getElementById('save-btn');
-    const status = document.getElementById('status');
+<div class="section">
+<h3>Hero блок</h3>
 
-    // 1. Загружаем текущий файл
-    async function loadData() {
-      const r = await fetch(`/data/home.json?v=${Date.now()}`);
-      const data = await r.json();
-      editor.value = JSON.stringify(data, null, 2);
-    }
+<label>Заголовок</label>
+<input id="hero_title">
 
-    // 2. Функция сохранения (отправка коммита в GitHub API)
-    btn.onclick = async () => {
-      btn.disabled = true;
-      status.innerText = 'Сохранение...';
+<label>Подзаголовок</label>
+<input id="hero_subtitle">
 
-      try {
-        const url = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
-        // Сначала нужно получить SHA файла (требование GitHub API для обновления)
-        const getFile = await fetch(url, {
-          method: 'GET',
-          headers: { 
-            'Authorization': `token ${GITHUB_TOKEN}`,
-            'Accept': 'application/vnd.github.v3+json'
-          }
-        });
-        const fileData = await getFile.json();
-        const sha = fileData.sha;
+<label>Основной текст</label>
+<textarea id="hero_main"></textarea>
 
-        // Отправляем новый контент
-        const content = btoa(unescape(encodeURIComponent(editor.value))); // Кодируем в Base64
-        
-        const response = await fetch(url, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `token ${GITHUB_TOKEN}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            message: 'Update content via Admin Panel',
-            content: content,
-            sha: sha,
-            branch: BRANCH
-          })
-        });
+<label>Дополнительный текст</label>
+<textarea id="hero_sub"></textarea>
 
-        if (response.ok) {
-          status.style.color = 'green';
-          status.innerText = 'Успешно! Vercel начал пересборку сайта (займет ~1 мин).';
-        } else {
-          throw new Error('Ошибка при сохранении');
-        }
-      } catch (e) {
-        status.style.color = 'red';
-        status.innerText = 'Ошибка: ' + e.message;
-      } finally {
-        btn.disabled = false;
-      }
-    };
+</div>
 
-    loadData();
-  </script>
+
+<div class="section">
+<h3>Преимущества</h3>
+
+<label>Преимущество 1</label>
+<input id="feature1">
+
+<label>Преимущество 2</label>
+<input id="feature2">
+
+<label>Преимущество 3</label>
+<input id="feature3">
+
+</div>
+
+
+<div class="section">
+
+<h3>Карточки</h3>
+
+<label>Карточка 1 Заголовок</label>
+<input id="card1_title">
+
+<label>Карточка 1 Текст</label>
+<textarea id="card1_text"></textarea>
+
+
+<label>Карточка 2 Заголовок</label>
+<input id="card2_title">
+
+<label>Карточка 2 Текст</label>
+<textarea id="card2_text"></textarea>
+
+</div>
+
+
+<div class="section">
+
+<h3>Государственные сервисы</h3>
+
+<textarea id="services"></textarea>
+
+<p>Каждый сервис с новой строки</p>
+
+</div>
+
+
+<button id="save-btn">Опубликовать изменения</button>
+
+<div id="status"></div>
+
+
+<script>
+
+const GITHUB_TOKEN = 'ghp_bKuRN6wxJLOp' + 'lGFkbT2NwC4uinIlxz2OeCax';
+const REPO = 'Myak0-0/migration_website';
+const FILE_PATH = 'public/data/home.json';
+const BRANCH = 'master';
+
+const btn = document.getElementById('save-btn');
+const status = document.getElementById('status');
+
+let jsonData;
+
+
+// Загрузка JSON
+
+async function loadData(){
+
+const r = await fetch(`/data/home.json?v=${Date.now()}`);
+jsonData = await r.json();
+
+const hero = jsonData.blocks.find(b=>b.type=="hero");
+const features = jsonData.blocks.find(b=>b.type=="features");
+const cards = jsonData.blocks.find(b=>b.type=="info_cards");
+const services = jsonData.blocks.find(b=>b.type=="services_grid");
+
+
+document.getElementById("hero_title").value = hero.title;
+document.getElementById("hero_subtitle").value = hero.subtitle;
+document.getElementById("hero_main").value = hero.mainText;
+document.getElementById("hero_sub").value = hero.subText;
+
+
+document.getElementById("feature1").value = features.items[0].text;
+document.getElementById("feature2").value = features.items[1].text;
+document.getElementById("feature3").value = features.items[2].text;
+
+
+document.getElementById("card1_title").value = cards.cards[0].title;
+document.getElementById("card1_text").value = cards.cards[0].text;
+
+document.getElementById("card2_title").value = cards.cards[1].title;
+document.getElementById("card2_text").value = cards.cards[1].text;
+
+
+document.getElementById("services").value =
+services.items.map(i=>i.text).join("\n");
+
+}
+
+
+btn.onclick = async ()=>{
+
+btn.disabled = true;
+status.innerText = 'Сохранение...';
+
+try{
+
+
+const hero = jsonData.blocks.find(b=>b.type=="hero");
+const features = jsonData.blocks.find(b=>b.type=="features");
+const cards = jsonData.blocks.find(b=>b.type=="info_cards");
+const services = jsonData.blocks.find(b=>b.type=="services_grid");
+
+
+hero.title = document.getElementById("hero_title").value;
+hero.subtitle = document.getElementById("hero_subtitle").value;
+hero.mainText = document.getElementById("hero_main").value;
+hero.subText = document.getElementById("hero_sub").value;
+
+
+features.items[0].text = document.getElementById("feature1").value;
+features.items[1].text = document.getElementById("feature2").value;
+features.items[2].text = document.getElementById("feature3").value;
+
+
+cards.cards[0].title = document.getElementById("card1_title").value;
+cards.cards[0].text = document.getElementById("card1_text").value;
+
+cards.cards[1].title = document.getElementById("card2_title").value;
+cards.cards[1].text = document.getElementById("card2_text").value;
+
+
+const servicesList = document.getElementById("services")
+.value
+.split("\n")
+.filter(t=>t.trim()!="")
+.map(t=>({text:t}));
+
+services.items = servicesList;
+
+
+
+const jsonString = JSON.stringify(jsonData,null,2);
+
+
+const url = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
+
+const getFile = await fetch(url,{
+method:'GET',
+headers:{
+'Authorization':`token ${GITHUB_TOKEN}`,
+'Accept':'application/vnd.github.v3+json'
+}
+});
+
+const fileData = await getFile.json();
+const sha = fileData.sha;
+
+const content = btoa(unescape(encodeURIComponent(jsonString)));
+
+const response = await fetch(url,{
+method:'PUT',
+headers:{
+'Authorization':`token ${GITHUB_TOKEN}`,
+'Content-Type':'application/json'
+},
+body:JSON.stringify({
+message:'Update content via Admin Panel',
+content:content,
+sha:sha,
+branch:BRANCH
+})
+});
+
+if(response.ok){
+
+status.style.color='green';
+status.innerText='Успешно! Vercel пересобирает сайт (~1 мин)';
+
+}else{
+
+throw new Error('Ошибка при сохранении');
+
+}
+
+}catch(e){
+
+status.style.color='red';
+status.innerText='Ошибка: '+e.message;
+
+}
+
+btn.disabled=false;
+
+}
+
+
+loadData();
+
+</script>
+
 </body>
 </html>
-
