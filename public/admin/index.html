@@ -63,6 +63,14 @@ font-weight:bold;
 <h2>Редактор контента</h2>
 
 <div class="section">
+<h3>SEO</h3>
+
+<label>Description страницы</label>
+<textarea id="description"></textarea>
+
+</div>
+
+<div class="section">
 <h3>Блок с картинкой</h3>
 
 <label>Заголовок</label>
@@ -151,6 +159,8 @@ async function loadData(){
 const r = await fetch(`/data/home.json?v=${Date.now()}`);
 jsonData = await r.json();
 
+document.getElementById("description").value = jsonData.description;
+
 const hero = jsonData.blocks.find(b=>b.type=="hero");
 const features = jsonData.blocks.find(b=>b.type=="features");
 const cards = jsonData.blocks.find(b=>b.type=="info_cards");
@@ -188,6 +198,7 @@ status.innerText = 'Сохранение...';
 
 try{
 
+jsonData.description = document.getElementById("description").value;
 
 const hero = jsonData.blocks.find(b=>b.type=="hero");
 const features = jsonData.blocks.find(b=>b.type=="features");
